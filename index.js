@@ -1,11 +1,17 @@
 const express = require("express");
 const app = express();
-const {config} = require('./config/index')
+const router = require("./network/routes");
+const server = require("http").Server(app);
 
-app.get("/", (req, res) =>{
-  res.send("Hello world");
-});
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
 
-app.listen(config.port, () =>{
-  console.log(`${config.host}:${config.port}`);
+const { config } = require("./config/index");
+const host = config.host;
+
+router(app);
+
+server.listen(config.port, () => {
+  // eslint-disable-next-line no-console
+  console.log(`${host}:${config.port}`);
 });
