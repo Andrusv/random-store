@@ -1,8 +1,11 @@
+const express = require("express");
 const products = require('../components/products/network')
 
-
 const routes = function (server) {
-    server.use('/products',products)
+    const router = express.Router();
+    server.use('/api/v1', router);
+
+    router.use('/products',products)
 }
 
 module.exports = routes;
