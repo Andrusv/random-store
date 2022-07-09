@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 });
 
 router.patch("/", (req, res) => {
-  modifyProduct(req.body.Product, req.body.productId)
+  modifyProduct(req.body.Product)
     .then((productUpdated) => response.success(req, res, productUpdated, 200))
     .catch((error) =>
       response.error(req, res, "Error en base de datos", null, error)

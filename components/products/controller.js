@@ -29,6 +29,21 @@ function getProductById(productId) {
   })
 }
 
+function modifyProduct(product) {
+  return new Promise((resolve, reject) => {
+    if (!product) {
+      return reject('No hay informacion de producto');
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const {_id, ...modifyProduct } = product;
+
+    return resolve(
+      Storage.modifyProduct(modifyProduct).catch((error) => reject(error))
+    );
+  });
+}
+
 function deleteProduct(productId) {
   return new Promise((resolve, reject) => {
     if (!productId) {
@@ -40,4 +55,4 @@ function deleteProduct(productId) {
     );
   });
 }
-module.exports = { createProduct, getAllProducts, getProductById, deleteProduct };
+module.exports = { createProduct, getAllProducts, getProductById, modifyProduct, deleteProduct };
