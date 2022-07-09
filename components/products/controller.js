@@ -16,10 +16,10 @@ function getAllProducts(productId, limit) {
   return new Promise((resolve, reject) => {
 
     if(productId) {
-      return resolve(getProductById(productId).catch((error) => reject(error)));
+      return resolve(getProductById(productId)).catch(error => reject(error));
     }
 
-    return resolve(Storage.getAllProducts(limit).catch((error) => reject(error)));
+    return resolve(Storage.getAllProducts(limit).catch(error => reject(error)));
   });
 }
 
