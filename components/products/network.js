@@ -15,19 +15,15 @@ const {
 
 const router = express.Router();
 
-router.post(
-  '/',
-  validatorHandler(createProductSchema, 'params'),
-  (req, res) => {
-    createProduct(req.body.products)
-      .then((products) => response.success(req, res, products, 201))
-      .catch((error) =>
-        response.error(req, res, 'Error en base de datos', null, error)
-      );
-  }
-);
+router.post('/', validatorHandler(createProductSchema, 'body'), (req, res) => {
+  createProduct(req.body.products)
+    .then((products) => response.success(req, res, products, 201))
+    .catch((error) =>
+      response.error(req, res, 'Error en base de datos', null, error)
+    );
+});
 
-router.get('/',(req, res) => {
+router.get('/', (req, res) => {
   getAllProducts(req.body.productId, req.query.limit)
     .then((products) => response.success(req, res, products, 200))
     .catch((error) =>
@@ -35,8 +31,7 @@ router.get('/',(req, res) => {
     );
 });
 
-router.patch('/',
-validatorHandler(modifyProductSchema, 'params'),(req, res) => {
+router.patch('/', validatorHandler(modifyProductSchema, 'body'), (req, res) => {
   modifyProduct(req.body.Product)
     .then((productUpdated) => response.success(req, res, productUpdated, 200))
     .catch((error) =>
@@ -44,13 +39,16 @@ validatorHandler(modifyProductSchema, 'params'),(req, res) => {
     );
 });
 
-router.delete('/',
-validatorHandler(deleteProductSchema, 'params'),(req, res) => {
-  deleteProduct(req.body.productId)
-    .then((deletedProduct) => response.success(req, res, deletedProduct, 200))
-    .catch((error) =>
-      response.error(req, res, 'Error en base de datos', 409, error)
-    );
-});
+router.delete(
+  '/',
+  validatorHandler(deleteProductSchema, 'body'),
+  (req, res) => {
+    deleteProduct(req.body.productId)
+      .then((deletedProduct) => response.success(req, res, deletedProduct, 200))
+      .catch((error) =>
+        response.error(req, res, 'Error en base de datos', 409, error)
+      );
+  }
+);
 
 module.exports = router;

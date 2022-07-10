@@ -19,7 +19,7 @@ function getAllProducts(productId, limit) {
       return resolve(getProductById(productId)).catch(error => reject(error));
     }
 
-    return resolve(Storage.getAllProducts(limit).catch(error => reject(error)));
+    return resolve(Storage.getAllProducts(limit || 10).catch(error => reject(error)));
   });
 }
 
