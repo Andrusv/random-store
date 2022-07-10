@@ -1,42 +1,55 @@
-const express = require("express");
-const response = require("../../network/response");
-const { createProduct,
+const express = require('express');
+const response = require('../../network/response');
+const validatorHandler = require('../../middlewares/validatorHandler');
+const {
+  createProduct,
   getAllProducts,
   modifyProduct,
-  deleteProduct } = require("./controller");
+  deleteProduct,
+} = require('./controller');
+const {
+  createProductSchema,
+  modifyProductSchema,
+  deleteProductSchema,
+} = require('./schema');
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  createProduct(req.body.products)
-    .then((products) => response.success(req, res, products, 201))
-    .catch((error) =>
-      response.error(req, res, "Error en base de datos", null, error)
-    );
-});
+router.post(
+  '/',
+  validatorHandler(createProductSchema, 'params'),
+  (req, res) => {
+    createProduct(req.body.products)
+      .then((products) => response.success(req, res, products, 201))
+      .catch((error) =>
+        response.error(req, res, 'Error en base de datos', null, error)
+      );
+  }
+);
 
-router.get("/", (req, res) => {
+router.get('/',(req, res) => {
   getAllProducts(req.body.productId, req.query.limit)
     .then((products) => response.success(req, res, products, 200))
     .catch((error) =>
-      response.error(req, res, "Error en base de datos", 404, error)
+      response.error(req, res, 'Error en base de datos', 404, error)
     );
 });
 
-router.patch("/", (req, res) => {
+router.patch('/',
+validatorHandler(modifyProductSchema, 'params'),(req, res) => {
   modifyProduct(req.body.Product)
     .then((productUpdated) => response.success(req, res, productUpdated, 200))
     .catch((error) =>
-      response.error(req, res, "Error en base de datos", 304, error)
+      response.error(req, res, 'Error en base de datos', 304, error)
     );
 });
 
-router.delete("/", (req, res) => {
+router.delete('/',
+validatorHandler(deleteProductSchema, 'params'),(req, res) => {
   deleteProduct(req.body.productId)
     .then((deletedProduct) => response.success(req, res, deletedProduct, 200))
     .catch((error) =>
-      response.error(req,res,"Error en base de datos",409,error
-      )
+      response.error(req, res, 'Error en base de datos', 409, error)
     );
 });
 
