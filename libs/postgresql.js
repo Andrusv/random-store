@@ -1,31 +1,18 @@
-const { Client } = require('pg');
-const { config } = require('../config/index')
+const { Pool } = require('pg');
+const { config } = require('../config/index');
 
-const host = config.dbHost
-const port = config.dbPort
-const user = config.dbAdmin
-const password = config.dbPassword
-const database = config.dbDatabase
+const HOST = config.dbHost;
+const PORT = config.dbPort;
+const USER = config.dbAdmin;
+const PASSWORD = config.dbPassword;
+const DATABASE = config.dbDatabase;
 
-Client.Promise = global.Promise
+const postgreSQL = new Pool({
+        host: HOST,
+        port: PORT,
+        user: USER,
+        password: PASSWORD,
+        database: DATABASE,
+      })
 
-async function postgresConnection() {
-  const client = new Client({
-    host,
-    port,
-    user,
-    password,
-    database
-  });
-  return await client
-    .connect()
-    .then((client) => {
-      // eslint-disable-next-line no-console
-      console.log('[db.Postgresql] Conectada con éxito')
-      return client
-    })
-    // eslint-disable-next-line no-console
-    .catch((err) => console.error('[db.Postgresql]', err.message));
-}
-
-module.exports = postgresConnection;
+module.exports = postgreSQL;

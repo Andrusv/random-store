@@ -13,10 +13,6 @@ app.use(bodyParser.json());
 const corsOptions = require('./middlewares/cors');
 app.use(cors(corsOptions))
 
-const postgresConnection = require('./libs/postgresql')
-// eslint-disable-next-line no-unused-vars
-const connection = postgresConnection();
-
 router(app);
 
 server.listen(config.port, () => {
