@@ -13,6 +13,9 @@ app.use(bodyParser.json());
 const corsOptions = require('./middlewares/cors');
 app.use(cors(corsOptions))
 
+const postgreSql = require("./libs/postgresql");
+postgreSql.authConnection();
+
 router(app);
 
 server.listen(config.port, () => {

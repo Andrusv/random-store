@@ -1,29 +1,26 @@
-const { ProductModel } = require("./model");
-const postgreSQL = require('../../libs/postgresql')
+const { ProductsModel } = require("./model");
 
 function createProduct(products) {
-  return new ProductModel({products}).save();
+  return new ProductsModel({products}).save();
 }
 
 // eslint-disable-next-line no-unused-vars
 function getAllProducts(limit) {
-  return new Promise(  (resolve) => {
-    resolve(postgreSQL.query('SELECT * from tasks'))
-  }).then(response => response.rows)
+  return ProductsModel.findAll();
 }
 
 function getProductById(productId) {
-  return ProductModel.find({ productId });
+  return ProductsModel.find({ productId });
 }
 
 function modifyProduct(product) {
-  return new ProductModel.find({ _id: product.productId }).modifyOne({
+  return new ProductsModel.find({ _id: product.productId }).modifyOne({
     ...product
   });
 }
 
 function deleteProduct(productId) {
-  return ProductModel.find({ _id: productId }).deleteOne({
+  return ProductsModel.find({ _id: productId }).deleteOne({
     _id: productId,
   });
 }
