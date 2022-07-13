@@ -25,8 +25,8 @@ const userSchema = {
   },
 };
 
-const ProductsModel = PostgreSQL.define('Users', userSchema);
+const UsersModel = PostgreSQL.define('Users', userSchema);
 
 PostgreSQL.sync({ force: true });
 
-module.exports = { ProductsModel };
+module.exports = { UsersModel };
