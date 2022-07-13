@@ -3,10 +3,10 @@ const { PostgreSQL } = require('../../libs/postgresql');
 
 const userSchema = {
   id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
     allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-    type: DataTypes.INTEGER,
+    primaryKey: true
   },
   email: {
     allowNull: false,

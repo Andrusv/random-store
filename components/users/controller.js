@@ -1,32 +1,27 @@
 const Storage = require('./storage');
 
-function createUser(users) {
+function createUser(user) {
   return new Promise((resolve, reject) => {
-    if (users.length === 0) {
-      return reject('No hay useros');
-    }
-
-    return resolve(
-      Storage.createUser(users).catch((error) => reject(error))
-    );
+    return resolve(Storage.createUser(user).catch((error) => reject(error)));
   });
 }
 
 function getAllUsers(userId, limit) {
   return new Promise((resolve, reject) => {
-
-    if(userId) {
-      return resolve(getUserById(userId)).catch(error => reject(error));
+    if (userId) {
+      return resolve(getUserById(userId)).catch((error) => reject(error));
     }
 
-    return resolve(Storage.getAllUsers(limit || 10).catch(error => reject(error)));
+    return resolve(
+      Storage.getAllUsers(limit || 10).catch((error) => reject(error))
+    );
   });
 }
 
 function getUserById(userId) {
   return new Promise((resolve, reject) => {
-    resolve(Storage.getUserById(userId).catch((error) => reject(error)))
-  })
+    resolve(Storage.getUserById(userId).catch((error) => reject(error)));
+  });
 }
 
 function modifyUser(user) {
@@ -36,7 +31,7 @@ function modifyUser(user) {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const {_id, ...modifyUser } = user;
+    const { _id, ...modifyUser } = user;
 
     return resolve(
       Storage.modifyUser(modifyUser).catch((error) => reject(error))
@@ -50,9 +45,13 @@ function deleteUser(userId) {
       return reject('No hay identificador de user');
     }
 
-    return resolve(
-      Storage.deleteUser(userId).catch((error) => reject(error))
-    );
+    return resolve(Storage.deleteUser(userId).catch((error) => reject(error)));
   });
 }
-module.exports = { createUser, getAllUsers, getUserById, modifyUser, deleteUser };
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUserById,
+  modifyUser,
+  deleteUser,
+};

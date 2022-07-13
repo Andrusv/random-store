@@ -1,28 +1,29 @@
+/* eslint-disable no-unused-vars */
 const Joi = require('joi')
 
 const id = Joi.string().uuid()
 const name = Joi.string().min(3).max(15)
 const price = Joi.number().precision(2).greater(0)
+const email = Joi.string().email()
+const password = Joi.string().min(5).max(15)
 
-const createProductSchema = Joi.object({
-  name: name.required(),
-  price: price.required()
+const createUserSchema = Joi.object({
+  email: email.required(),
+  password: password.required()
 })
 
-const modifyProductSchema = Joi.object({
+const modifyUserSchema = Joi.object({
   id: id.required(),
-  name: name,
-  price: price
+  email: email,
+  password: password
 })
 
-const deleteProductSchema = Joi.object({
-  id: id.required(),
-  name: name,
-  price: price
+const deleteUserSchema = Joi.object({
+  id: id.required()
 })
 
 module.exports = {
-  createProductSchema,
-  modifyProductSchema,
-  deleteProductSchema
+  createUserSchema,
+  modifyUserSchema,
+  deleteUserSchema
 }

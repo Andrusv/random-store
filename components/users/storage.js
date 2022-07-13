@@ -1,7 +1,7 @@
 const { UsersModel } = require("./model");
 
-function createUser(users) {
-  return new UsersModel({users}).save();
+function createUser(user) {
+  return UsersModel.create(user);
 }
 
 // eslint-disable-next-line no-unused-vars

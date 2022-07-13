@@ -16,15 +16,15 @@ const {
 const router = express.Router();
 
 router.post('/', validatorHandler(createUserSchema, 'body'), (req, res) => {
-  createUser(req.body.users)
-    .then((users) => response.success(req, res, users, 201))
+  createUser(req.body)
+    .then((user) => response.success(req, res, user, 201))
     .catch((error) =>
       response.error(req, res, 'Error en base de datos', null, error)
     );
 });
 
 router.get('/', (req, res) => {
-  getAllUsers(req.body.userId, req.query.limit)
+  getAllUsers(req.body.userId, req.body.limit)
     .then((users) => response.success(req, res, users, 200))
     .catch((error) =>
       response.error(req, res, 'Error en base de datos', 404, error)
@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 });
 
 router.patch('/', validatorHandler(modifyUserSchema, 'body'), (req, res) => {
-  modifyUser(req.body.User)
+  modifyUser(req.body)
     .then((userUpdated) => response.success(req, res, userUpdated, 200))
     .catch((error) =>
       response.error(req, res, 'Error en base de datos', 304, error)
@@ -43,7 +43,7 @@ router.delete(
   '/',
   validatorHandler(deleteUserSchema, 'body'),
   (req, res) => {
-    deleteUser(req.body.userId)
+    deleteUser(req.body.id)
       .then((deletedUser) => response.success(req, res, deletedUser, 200))
       .catch((error) =>
         response.error(req, res, 'Error en base de datos', 409, error)
