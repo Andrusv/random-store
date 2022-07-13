@@ -24,7 +24,7 @@ router.post('/', validatorHandler(createUserSchema, 'body'), (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  getAllUsers(req.body.userId, req.body.limit)
+  getAllUsers(req.body.id, req.body.limit)
     .then((users) => response.success(req, res, users, 200))
     .catch((error) =>
       response.error(req, res, 'Error en base de datos', 404, error)

@@ -1,4 +1,4 @@
-const { UsersModel } = require("./model");
+const { UsersModel } = require('./model');
 
 function createUser(user) {
   return UsersModel.create(user);
@@ -10,18 +10,16 @@ function getAllUsers(limit) {
 }
 
 function getUserById(userId) {
-  return UsersModel.find({ userId });
+  return UsersModel.findByPk(userId);
 }
 
-function modifyUser(user) {
-  return new UsersModel.find({ _id: user.userId }).modifyOne({
-    ...user
-  });
+function modifyUser(user, userId) {
+  return UsersModel.update(user, { where: { id: userId } });
 }
 
 function deleteUser(userId) {
-  return UsersModel.find({ _id: userId }).deleteOne({
-    _id: userId,
+  return UsersModel.destroy({
+    where: { id: userId },
   });
 }
 

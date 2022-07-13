@@ -26,25 +26,16 @@ function getUserById(userId) {
 
 function modifyUser(user) {
   return new Promise((resolve, reject) => {
-    if (!user) {
-      return reject('No hay informacion de usero');
-    }
-
-    // eslint-disable-next-line no-unused-vars
-    const { _id, ...modifyUser } = user;
+    const { id, ...modifyUser } = user;
 
     return resolve(
-      Storage.modifyUser(modifyUser).catch((error) => reject(error))
+      Storage.modifyUser(modifyUser,id).catch((error) => reject(error))
     );
   });
 }
 
 function deleteUser(userId) {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      return reject('No hay identificador de user');
-    }
-
     return resolve(Storage.deleteUser(userId).catch((error) => reject(error)));
   });
 }
