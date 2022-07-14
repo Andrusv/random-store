@@ -19,7 +19,7 @@ router.post('/', validatorHandler(createUserSchema, 'body'), (req, res) => {
   createUser(req.body)
     .then((user) => response.success(req, res, user, 201))
     .catch((error) =>
-      response.error(req, res, 'Error en base de datos', null, error)
+      response.error(req, res, error, 409, 'Error en base de datos creando user')
     );
 });
 

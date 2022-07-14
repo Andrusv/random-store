@@ -1,12 +1,11 @@
 const { UsersModel } = require('./model');
 
 function createUser(user) {
-  return UsersModel.create(user);
+  return new UsersModel(user).save()
 }
 
-// eslint-disable-next-line no-unused-vars
 function getAllUsers(limit) {
-  return UsersModel.findAll();
+  return UsersModel.findAll({limit});
 }
 
 function getUserById(userId) {
@@ -14,7 +13,7 @@ function getUserById(userId) {
 }
 
 function modifyUser(user, userId) {
-  return UsersModel.update(user, { where: { id: userId } });
+  return UsersModel.update(user, { where: { id: userId } })
 }
 
 function deleteUser(userId) {

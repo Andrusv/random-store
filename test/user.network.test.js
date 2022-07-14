@@ -26,7 +26,7 @@ describe("#Users Network.js: ", () => {
       });
   });
 
-  it("POST /users    create user status 400", (done) => {
+  it("POST /users    create user status 400 email and password required", (done) => {
     chai
       .request(url)
       .post("/users/")
@@ -37,6 +37,22 @@ describe("#Users Network.js: ", () => {
         expect(res).to.have.status(400);
         expect(res.body.error[0]).to.be.equal("\"email\" is required");
         expect(res.body.error[1]).to.be.equal("\"password\" is required")
+        expect(res.body.body).to.be.equal("");
+        done();
+      });
+  });
+
+  it("POST /users    create user status 409 email must be unique", (done) => {
+    chai
+      .request(url)
+      .post("/users/")
+      .send({
+        "email": "andres@gmail.com",
+        "password": "12345"
+      })
+      .end(function (err, res) {
+        expect(res).to.have.status(409);
+        expect(res.body.error).to.be.equal("email must be unique");
         expect(res.body.body).to.be.equal("");
         done();
       });
@@ -54,6 +70,20 @@ describe("#Users Network.js: ", () => {
         expect(res).to.have.status(200);
         expect(res.body.error).to.be.equal("");
         expect(res.body.body[0]).to.be.equal(1);
+        done();
+      });
+  });
+
+  it("PATCH /users    Modify user's email status 400 id required", (done) => {
+    chai
+      .request(url)
+      .patch("/users/")
+      .send({
+      })
+      .end(function (err, res) {
+        expect(res).to.have.status(400);
+        expect(res.body.error[0]).to.be.equal("\"id\" is required");
+        expect(res.body.body).to.be.equal("");
         done();
       });
   });
@@ -99,7 +129,7 @@ describe("#Users Network.js: ", () => {
       });
   });
 
-  it("DELETE /user    delete user status 409", (done) => {
+  it("DELETE /user    delete user status 400", (done) => {
     chai
       .request(url)
       .delete("/users")

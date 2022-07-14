@@ -16,6 +16,7 @@ const userSchema = {
   password: {
     allowNull: false,
     type: DataTypes.STRING,
+    unique: true
   },
   createdAt: {
     allowNull: false,
@@ -27,6 +28,6 @@ const userSchema = {
 
 const UsersModel = PostgreSQL.define('Users', userSchema);
 
-PostgreSQL.sync({ force: true });
+UsersModel.sync({ force: true });
 
 module.exports = { UsersModel };
