@@ -1,4 +1,4 @@
-const { UsersModel } = require('./model');
+const { UsersModel } = require('./model.js');
 
 function createUser(user) {
   return new UsersModel(user).save()

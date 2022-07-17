@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "nodemon index.js",
     "lint": "eslint",
-    "test": "mocha test"
+    "test": "mocha test",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:revert": "sequelize-cli db:migrate:undo"
   },
   "keywords": [],
   "author": "Andres Barroso <andresbarrosocl@gmail.com>",
@@ -17,7 +20,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "faker": "^5.5.3",
     "nodemon": "^2.0.19",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "sequelize-cli": "^6.4.1"
   },
   "dependencies": {
     "chai": "^4.3.6",

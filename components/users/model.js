@@ -1,6 +1,7 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { SQL } = require('../../libs/SQL');
 
+const TABLE_NAME = 'Users'
 const userSchema = {
   id: {
     type: Sequelize.UUID,
@@ -26,8 +27,8 @@ const userSchema = {
   },
 };
 
-const UsersModel = SQL.define('Users', userSchema);
+const UsersModel = SQL.define(TABLE_NAME, userSchema);
 
-UsersModel.sync({ force: true });
+// UsersModel.sync({ force: true });
 
-module.exports = { UsersModel };
+module.exports = { UsersModel, TABLE_NAME, userSchema };
