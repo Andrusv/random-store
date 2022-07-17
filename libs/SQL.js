@@ -7,23 +7,24 @@ const PORT = config.dbPort;
 const USER = config.dbAdmin;
 const PASSWORD = config.dbPassword;
 const DATABASE = config.dbDatabase;
+const DATABASEMANAGER = config.dbDatabaseManager;
 
-const URI = `postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;
+const URI = `${DATABASEMANAGER}://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;
 
-let PostgreSQL = new Sequelize(URI, { logging: false });
+let SQL = new Sequelize(URI, { logging: false });
 
 function authConnection() {
   return new Promise((resolve, reject) => {
-    PostgreSQL.authenticate()
+    SQL.authenticate()
       .then(() => {
-        console.log('[db.Postgres] Conectada con éxito');
+        console.log(`[db.${DATABASEMANAGER}] Conectada con éxito`);
         resolve('All ok');
       })
       .catch((error) => {
-        console.error('[db.Mongo]', error.message);
+        console.error(`[db.${DATABASEMANAGER}]`, error.message);
         reject(error);
       });
   });
 }
 
-module.exports = { PostgreSQL, authConnection };
+module.exports = { SQL, authConnection };

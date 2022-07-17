@@ -13,8 +13,8 @@ app.use(bodyParser.json());
 const corsOptions = require('./middlewares/cors');
 app.use(cors(corsOptions))
 
-const postgreSql = require("./libs/postgresql");
-postgreSql.authConnection();
+const Sql = require("./libs/SQL");
+Sql.authConnection();
 
 router(app);
 

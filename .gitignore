@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,windows,macos,linux
 
 postgres_data
+mysql_data
 
 ### Linux ###
 *~

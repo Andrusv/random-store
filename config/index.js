@@ -9,7 +9,8 @@ const config = {
     dbAdmin: process.env.DB_ADMIN,
     dbPassword: process.env.DB_PASSWORD,
     dbPort: process.env.DB_PORT,
-    dbDatabase: process.env.DB_DATABASE
+    dbDatabase: process.env.DB_DATABASE,
+    dbDatabaseManager: process.env.DB_DATABASE_MANAGER
 }
 
 module.exports = { config }

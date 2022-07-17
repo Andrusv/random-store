@@ -1,5 +1,5 @@
 const { DataTypes, Sequelize } = require('sequelize');
-const { PostgreSQL } = require('../../libs/postgresql');
+const { SQL } = require('../../libs/SQL');
 
 const userSchema = {
   id: {
@@ -26,7 +26,7 @@ const userSchema = {
   },
 };
 
-const UsersModel = PostgreSQL.define('Users', userSchema);
+const UsersModel = SQL.define('Users', userSchema);
 
 UsersModel.sync({ force: true });
 
