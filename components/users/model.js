@@ -25,6 +25,12 @@ const userSchema = {
     field: 'create_at',
     defaultValue: Sequelize.NOW,
   },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'update_at',
+    defaultValue: Sequelize.NOW,
+  },
 };
 
 const UsersModel = SQL.define(TABLE_NAME, userSchema);
