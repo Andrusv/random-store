@@ -4,7 +4,7 @@ function createCustomer(customer) {
   return new Promise((resolve, reject) => {
     Storage.createCustomer(customer)
       .then((createdCustomer) => resolve(createdCustomer))
-      .catch((error) => reject(error.errors[0].message));
+      .catch((error) => reject(error)); //.errors[0].message
   });
 }
 
