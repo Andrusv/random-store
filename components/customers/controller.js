@@ -4,7 +4,13 @@ function createCustomer(customer) {
   return new Promise((resolve, reject) => {
     Storage.createCustomer(customer)
       .then((createdCustomer) => resolve(createdCustomer))
-      .catch((error) => reject(error)); //.errors[0].message
+      .catch((error) => {
+        if (error.name === 'SequelizeForeignKeyConstraintError') {
+          reject('Error en base de datos')
+        } else {
+          reject(error.errors[0].message);
+        }
+      });
   });
 }
 

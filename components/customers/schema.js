@@ -21,7 +21,7 @@ const modifyCustomerSchema = Joi.object({
   name,
   lastName,
   phone,
-  userId
+  id: id.required(),
 });
 
 const deleteCustomerSchema = Joi.object({
