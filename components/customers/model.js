@@ -1,6 +1,5 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { SQL } = require('../../libs/SQL');
-const { UsersModel } = require('../users/model');
 
 const TABLE_NAME = 'Customers';
 const customerSchema = {
@@ -32,16 +31,6 @@ const customerSchema = {
 
 const CustomersModel = SQL.define(TABLE_NAME, customerSchema, {
   updatedAt: false,
-});
-
-UsersModel.hasOne(CustomersModel, {
-  foreignKey: {
-    name: 'user_id',
-    type: Sequelize.UUID,
-  },
-});
-CustomersModel.belongsTo(UsersModel, {
-  foreignKey: 'user_id'
 });
 
 module.exports = { CustomersModel, TABLE_NAME, customerSchema };

@@ -16,6 +16,9 @@ app.use(cors(corsOptions))
 const Sql = require("./libs/SQL");
 Sql.authConnection();
 
+const setupModels = require('./db/models')
+setupModels();
+
 router(app);
 
 server.listen(config.port, () => {

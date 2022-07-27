@@ -35,6 +35,4 @@ const userSchema = {
 
 const UsersModel = SQL.define(TABLE_NAME, userSchema);
 
-// UsersModel.sync({ force: true });
-
 module.exports = { UsersModel, TABLE_NAME, userSchema };
