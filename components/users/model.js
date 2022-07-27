@@ -35,4 +35,13 @@ const userSchema = {
 
 const UsersModel = SQL.define(TABLE_NAME, userSchema);
 
-module.exports = { UsersModel, TABLE_NAME, userSchema };
+const associations = (models) => {
+  UsersModel.hasOne(models.CustomersModel, {
+    foreignKey: {
+      name: 'user_id',
+      type: Sequelize.UUID,
+    },
+  });
+}
+
+module.exports = { UsersModel, TABLE_NAME, userSchema, associations };

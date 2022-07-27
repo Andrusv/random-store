@@ -33,4 +33,11 @@ const CustomersModel = SQL.define(TABLE_NAME, customerSchema, {
   updatedAt: false,
 });
 
-module.exports = { CustomersModel, TABLE_NAME, customerSchema };
+
+const associations = (models) => {
+  CustomersModel.belongsTo(models.UsersModel, {
+    foreignKey: 'user_id',
+  });
+}
+
+module.exports = { CustomersModel, TABLE_NAME, customerSchema, associations };
