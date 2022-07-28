@@ -6,10 +6,15 @@ const {
   CustomersModel,
   associations: customerAssociations,
 } = require('../components/customers/model');
+const {
+  OrdersModel,
+  associations: orderAssociations
+} = require('../components/orders/model')
 
 function setupModels() {
   userAssociations({ CustomersModel });
-  customerAssociations({ UsersModel });
+  customerAssociations({ UsersModel, OrdersModel });
+  orderAssociations({ CustomersModel })
 }
 
 module.exports = setupModels;

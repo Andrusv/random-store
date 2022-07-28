@@ -1,6 +1,8 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { SQL } = require('../../libs/SQL');
 
+const { TABLE_NAME: USERS_TABLE } = require('../users/model')
+
 const TABLE_NAME = 'Customers';
 const customerSchema = {
   id: {
@@ -23,7 +25,7 @@ const customerSchema = {
     allowNull: false,
     type: Sequelize.UUID,
     unique: true,
-    references: { model: 'Users', key: 'id' },
+    references: { model: USERS_TABLE, key: 'id' },
    // onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
@@ -38,6 +40,13 @@ const associations = (models) => {
   CustomersModel.belongsTo(models.UsersModel, {
     foreignKey: 'user_id',
   });
+
+  CustomersModel.hasOne(models.OrdersModel, {
+    foreignKey: {
+      name: 'customer_id',
+      type: Sequelize.UUID,
+    },
+  })
 }
 
 module.exports = { CustomersModel, TABLE_NAME, customerSchema, associations };
