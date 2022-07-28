@@ -14,7 +14,7 @@ const orderSchema = {
   customerId: {
     field: 'customer_id',
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: Sequelize.UUID,
     references: {
       model: CUSTOMERS_TABLE,
       key: 'id'
