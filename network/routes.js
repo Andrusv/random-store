@@ -1,6 +1,7 @@
 const express = require("express");
 const users = require('../components/users/network')
 const customers = require('../components/customers/network')
+const orders = require('../components/orders/network')
 
 
 const routes = function (server) {
@@ -9,6 +10,7 @@ const routes = function (server) {
 
     router.use('/users',users)
     router.use('/customers',customers)
+    router.use('/orders',orders)
 }
 
 module.exports = routes;

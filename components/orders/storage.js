@@ -1,4 +1,6 @@
 const { OrdersModel } = require('./model');
+const { CustomersModel } = require('../customers/model');
+const { UsersModel } = require('../users/model');
 
 function createOrder(order) {
   return new OrdersModel(order).save()
@@ -9,23 +11,19 @@ function getAllOrders(limit) {
 }
 
 function getOrderById(orderId) {
-  return OrdersModel.findByPk(orderId);
-}
-
-function modifyOrder(order, orderId) {
-  return OrdersModel.update(order, { where: { id: orderId } })
-}
-
-function deleteOrder(orderId) {
-  return OrdersModel.destroy({
-    where: { id: orderId },
+  return OrdersModel.findByPk(orderId, {
+    include: [{
+      model: CustomersModel,
+      include: [{
+        model: UsersModel,
+        attributes: ['email','create_at']
+      }]
+    }],
   });
 }
 
 module.exports = {
   createOrder,
   getAllOrders,
-  getOrderById,
-  modifyOrder,
-  deleteOrder,
+  getOrderById
 };
