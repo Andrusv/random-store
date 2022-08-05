@@ -5,23 +5,46 @@ const expect = require("chai").expect;
 chai.use(chaiHttp);
 const url = "http://localhost:3000/api/v1";
 
+class User {
+  constructor(email,password) {
+    this.email = email;
+    this.password = password;
+    this.userId = "";
+  }
+
+  createUser() {
+    return chai
+    .request(url)
+    .post("/users/")
+    .send({
+      "email": this.email,
+      "password": this.password
+    })
+  }
+
+  deleteUser(userId) {
+    return chai
+    .request(url)
+    .delete("/users/")
+    .send({
+      id: userId,
+    })
+  }
+}
+
+
+
 describe("#Users Network.js: ", () => {
-  // eslint-disable-next-line no-unused-vars
-  let userId;
+
+  const user = new User("andres@gmail.com" , "12345");
 
   it("POST /users    create user status 201", (done) => {
-    chai
-      .request(url)
-      .post("/users/")
-      .send({
-        "email": "andres@gmail.com",
-        "password": "12345"
-      })
-      .end(function (err, res) {
+      user.createUser().end(function (err, res) {
         expect(res).to.have.status(201);
         expect(res.body.error).to.be.equal("");
         expect(res.body.body.id).to.exist;
-        userId = res.body.body.id || null;
+        user.userId = res.body.body.id || null;
+
         done();
       });
   });
@@ -63,7 +86,7 @@ describe("#Users Network.js: ", () => {
       .request(url)
       .patch("/users/")
       .send({
-        "id": userId,
+        "id": user.userId,
         "email": "ambro@gmail.com",
       })
       .end(function (err, res) {
@@ -105,7 +128,7 @@ describe("#Users Network.js: ", () => {
     chai
       .request(url)
       .get("/users")
-      .send({ id: userId, name: "" })
+      .send({ id: user.userId, name: "" })
       .end(function (err, res) {
         expect(res).to.have.status(200);
         expect(res.body.error).to.be.equal("");
@@ -115,18 +138,15 @@ describe("#Users Network.js: ", () => {
   });
 
   it("DELETE /user    delete user status 200", (done) => {
-    chai
-      .request(url)
-      .delete("/users")
-      .send({
-        id: userId,
-      })
-      .end(function (err, res) {
+
+    user.deleteUser(user.userId)
+    .end(function (err, res) {
         expect(res).to.have.status(200);
         expect(res.body.error).to.be.equal("");
         expect(res.body.body).to.be.equal(1);
         done();
       });
+
   });
 
   it("DELETE /user    delete user status 400", (done) => {
@@ -146,3 +166,5 @@ describe("#Users Network.js: ", () => {
       });
   });
 });
+
+module.exports = { User }

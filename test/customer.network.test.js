@@ -2,41 +2,59 @@ let chai = require("chai");
 let chaiHttp = require("chai-http");
 const expect = require("chai").expect;
 
+const { User } = require("./user.network.test")
+
 chai.use(chaiHttp);
 const url = "http://localhost:3000/api/v1";
 
+class Customer {
+  constructor(name, lastName, phone) {
+    this.name = name;
+    this.lastName = lastName;
+    this.phone = phone;
+    this.customerId = "";
+  }
+
+  createCustomer(userId) {
+    return chai
+    .request(url)
+    .post("/customers/")
+    .send({
+      "name": "Andres",
+      "lastName": "Barroso",
+      "phone": "1203948234",
+      "userId": userId
+    })
+  }
+
+  deleteCustomer(customerId) {
+    return chai
+    .request(url)
+    .delete("/customers/")
+    .send({
+      id: customerId,
+    })
+  }
+
+}
+
 describe("#Customers Network.js: ", () => {
-  let customerId;
-  let userId;
+
+  const user = new User("andres@gmail.com" , "12345");
+  const customer = new Customer("Andres", "Barroso", "1203948234")
 
   it("POST /customers    create customer status 201", (done) => {
-    chai
-      .request(url)
-      .post("/users/")
-      .send({
-        "email": "andres@gmail.com",
-        "password": "12345"
-      })
-      .then( res => {
-        userId = res.body.body.id || null;
 
-        chai
-        .request(url)
-        .post("/customers/")
-        .send({
-          "name": "Andres",
-          "lastName": "Barroso",
-          "phone": "1203948234",
-          "userId": userId
-        })
-        .end(function (err, res) {
-          expect(res).to.have.status(201);
-          expect(res.body.error).to.be.equal("");
-          expect(res.body.body.id).to.exist;
-          customerId = res.body.body.id || null;
-          done();
-        });
-      })
+    user.createUser().then(res => user.userId = res.body.body.id || null).then(() => {
+      customer.createCustomer(user.userId)
+      .end(function (err, res) {
+        expect(res).to.have.status(201);
+        expect(res.body.error).to.be.equal("");
+        expect(res.body.body.id).to.exist;
+        customer.customerId = res.body.body.id || null;
+        done();
+      });
+    })
   });
 
   it("POST /customers    create customer status 400 name and userId required", (done) => {
@@ -64,7 +82,7 @@ describe("#Customers Network.js: ", () => {
         "name": "eeee",
         "lastName": "ssss",
         "phone": "656",
-        "userId": userId
+        "userId": user.userId
       })
       .end(function (err, res) {
         expect(res).to.have.status(409);
@@ -97,7 +115,7 @@ describe("#Customers Network.js: ", () => {
       .request(url)
       .patch("/customers/")
       .send({
-        "id": customerId,
+        "id": customer.customerId,
         "name": "ambrossini",
       })
       .end(function (err, res) {
@@ -126,7 +144,7 @@ describe("#Customers Network.js: ", () => {
     chai
       .request(url)
       .get("/customers")
-      .send({ "id": customerId })
+      .send({ "id": customer.customerId })
       .end(function (err, res) {
         expect(res).to.have.status(200);
         expect(res.body.error).to.be.equal("");
@@ -136,30 +154,19 @@ describe("#Customers Network.js: ", () => {
   });
 
   it("DELETE /customer    delete customer status 200", (done) => {
-    chai
-      .request(url)
-      .delete("/customers")
-      .send({
-        id: customerId,
-      })
+      customer.deleteCustomer(customer.customerId)
       .end(function (err, res) {
         expect(res).to.have.status(200);
         expect(res.body.error).to.be.equal("");
         expect(res.body.body).to.be.equal(1);
-      });
 
-      chai
-      .request(url)
-      .delete("/users")
-      .send({
-        id: userId,
-      })
-      .end(function (err, res) {
-        expect(res).to.have.status(200);
-        expect(res.body.error).to.be.equal("");
-        expect(res.body.body).to.be.equal(1);
+        user.deleteUser(user.userId)
+        // eslint-disable-next-line no-unused-vars
+        .end( function (err, res) {
+
         done();
-      });
+        })
+      })
   });
 
   it("DELETE /customer    delete customer status 400", (done) => {
@@ -178,3 +185,6 @@ describe("#Customers Network.js: ", () => {
       });
   });
 });
+
+
+module.exports = { Customer }
