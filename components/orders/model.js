@@ -38,6 +38,13 @@ const associations = (models) => {
   OrdersModel.belongsTo(models.CustomersModel, {
     foreignKey: 'customer_id',
   });
+
+  OrdersModel.belongsToMany(models.ProductsModel, {
+    as: 'items',
+    through: models.OrdersProductsModel,
+    foreignKey: 'order_id',
+    otherKey: 'product_id'
+  });
 }
 
 module.exports = { OrdersModel, TABLE_NAME, orderSchema, associations };

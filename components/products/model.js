@@ -46,7 +46,6 @@ const productSchema = {
 
 const ProductsModel = SQL.define(TABLE_NAME, productSchema);
 
-// eslint-disable-next-line no-unused-vars
 const associations = (models) => {
   ProductsModel.belongsTo(models.CategoriesModel, {
     as: 'category',
@@ -54,6 +53,12 @@ const associations = (models) => {
       name: 'category_id',
       type: Sequelize.UUID,
     },
+  });
+
+  ProductsModel.belongsToMany(models.OrdersModel, {
+    through: models.OrdersProductsModel,
+    foreignKey: 'product_id',
+    otherKey: 'order_id'
   });
 }
 
