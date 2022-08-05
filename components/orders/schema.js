@@ -12,7 +12,12 @@ const getOrderSchema = Joi.object({
   id: id.required(),
 });
 
+const deleteOrderSchema = Joi.object({
+  id: id.required()
+})
+
 module.exports = {
   createOrderSchema,
-  getOrderSchema
+  getOrderSchema,
+  deleteOrderSchema
 }

@@ -30,8 +30,17 @@ function getOrderById(orderId) {
   });
 }
 
+function deleteOrder(orderId) {
+  return new Promise((resolve, reject) => {
+    return Storage.deleteOrder(orderId)
+      .then((deletedOrder) => resolve(deletedOrder))
+      .catch((error) => reject(error));
+  });
+}
+
 module.exports = {
   createOrder,
   getAllOrders,
-  getOrderById
+  getOrderById,
+  deleteOrder
 };

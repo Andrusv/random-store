@@ -22,8 +22,15 @@ function getOrderById(orderId) {
   });
 }
 
+function deleteOrder(customerId) {
+  return OrdersModel.destroy({
+    where: { id: customerId },
+  });
+}
+
 module.exports = {
   createOrder,
   getAllOrders,
-  getOrderById
+  getOrderById,
+  deleteOrder
 };

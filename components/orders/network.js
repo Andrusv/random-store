@@ -3,11 +3,13 @@ const response = require('../../network/response');
 const validatorHandler = require('../../middlewares/validatorHandler');
 const {
   createOrder,
-  getAllOrders
+  getAllOrders,
+  deleteOrder
 } = require('./controller');
 const {
   createOrderSchema,
-  getOrderSchema
+  getOrderSchema,
+  deleteOrderSchema
 } = require('./schema');
 
 const router = express.Router();
@@ -27,6 +29,18 @@ router.get('/', validatorHandler(getOrderSchema, 'body'), (req, res) => {
       response.error(req, res, 'Error en base de datos', 404, error)
     );
 });
+
+router.delete(
+  '/',
+  validatorHandler(deleteOrderSchema, 'body'),
+  (req, res) => {
+    deleteOrder(req.body.id)
+      .then((deletedOrder) => response.success(req, res, deletedOrder, 200))
+      .catch((error) =>
+        response.error(req, res, 'Error en base de datos', 409, error)
+      );
+  }
+);
 
 
 module.exports = router;
