@@ -59,32 +59,32 @@ describe("#Orders Network.js: ", () => {
       })
   });
 
-  // it("POST /orders    create user status 400 id required", (done) => {
-  //   chai
-  //     .request(url)
-  //     .post("/orders/")
-  //     .send({
-  //     })
-  //     .end(function (err, res) {
-  //       expect(res).to.have.status(400);
-  //       expect(res.body.error[0]).to.be.equal("\"id\" is required");
-  //       expect(res.body.body).to.be.equal("");
-  //       done();
-  //     });
-  // });
+  it("POST /orders    create order status 400 id required", (done) => {
+    chai
+      .request(url)
+      .post("/orders/")
+      .send({
+      })
+      .end(function (err, res) {
+        expect(res).to.have.status(400);
+        expect(res.body.error[0]).to.be.equal("\"customerId\" is required");
+        expect(res.body.body).to.be.equal("");
+        done();
+      });
+  });
 
-  // it("GET /orders    Get user by id status 200", (done) => {
-  //   chai
-  //     .request(url)
-  //     .get("/users")
-  //     .send({ id: orderId })
-  //     .end(function (err, res) {
-  //       expect(res).to.have.status(200);
-  //       expect(res.body.error).to.be.equal("");
-  //       expect(res.body.body.Customer.User.email).to.be.equal("andres@gmail.com");
-  //       done();
-  //     });
-  // });
+  it("GET /orders    Get order by id status 200", (done) => {
+    chai
+      .request(url)
+      .get("/orders")
+      .send({ id: order.orderId })
+      .end(function (err, res) {
+        expect(res).to.have.status(200);
+        expect(res.body.error).to.be.equal("");
+        expect(res.body.body.Customer.User.email).to.be.equal("andres@gmail.com");
+        done();
+      });
+  });
 
   it("DELETE /order    delete order status 200", (done) => {
 
