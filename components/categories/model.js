@@ -30,11 +30,8 @@ const CategoriesModel = SQL.define(TABLE_NAME, categorySchema);
 
 
 const associations = (models) => {
-  CategoriesModel.hasOne(models.ProductsModel, {
-    foreignKey: {
-      name: 'category_id',
-      type: Sequelize.UUID,
-    },
+  CategoriesModel.hasMany(models.ProductsModel, {
+    as: 'products'
   });
 }
 

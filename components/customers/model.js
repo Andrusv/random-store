@@ -41,7 +41,7 @@ const associations = (models) => {
     foreignKey: 'user_id',
   });
 
-  CustomersModel.hasOne(models.OrdersModel, {
+  CustomersModel.hasMany(models.OrdersModel, {
     foreignKey: {
       name: 'customer_id',
       type: Sequelize.UUID,

@@ -1,5 +1,6 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { SQL } = require('../../libs/SQL');
+const { CategoriesModel } = require('../categories/model');
 
 const TABLE_NAME = 'Products'
 const productSchema = {
@@ -31,29 +32,29 @@ const productSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
-  // categoryId: {
-  //   field: 'category_id',
-  //   allowNull: false,
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: CATEGORY_TABLE,
-  //     key: 'id'
-  //   },
-  //   onUpdate: 'CASCADE',
-  //   onDelete: 'SET NULL'
-  // }
+  categoryId: {
+    field: 'category_id',
+    allowNull: false,
+    type: Sequelize.UUID,
+    references: {
+      model: CategoriesModel,
+      key: 'id'
+    },
+    onDelete: 'SET NULL'
+  }
 };
 
 const ProductsModel = SQL.define(TABLE_NAME, productSchema);
 
 // eslint-disable-next-line no-unused-vars
 const associations = (models) => {
-  // ProductsModel.(models.CustomersModel, {
-  //   foreignKey: {
-  //     name: 'user_id',
-  //     type: Sequelize.UUID,
-  //   },
-  // });
+  ProductsModel.belongsTo(models.CategoriesModel, {
+    as: 'category',
+    foreignKey: {
+      name: 'category_id',
+      type: Sequelize.UUID,
+    },
+  });
 }
 
 module.exports = { ProductsModel, TABLE_NAME, productSchema, associations };
