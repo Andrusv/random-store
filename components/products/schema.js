@@ -6,7 +6,7 @@ const name = Joi.string().min(3).max(15);
 const price = Joi.number().integer().min(10);
 const description = Joi.string().min(10);
 const image = Joi.string().uri();
-const categoryId = Joi.number().integer();
+const categoryId = Joi.string().uuid()
 
 const createProductSchema = Joi.object({
   name: name.required(),

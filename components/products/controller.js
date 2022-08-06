@@ -4,7 +4,7 @@ function createProduct(product) {
   return new Promise((resolve, reject) => {
     Storage.createProduct(product)
       .then((createdProduct) => resolve(createdProduct))
-      .catch((error) => reject(error.errors[0].message));
+      .catch((error) => reject(error)); //.errors[0].message
   });
 }
 

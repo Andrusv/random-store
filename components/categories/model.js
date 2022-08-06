@@ -26,12 +26,18 @@ const categorySchema = {
   },
 };
 
-const CategoriesModel = SQL.define(TABLE_NAME, categorySchema);
+const CategoriesModel = SQL.define(TABLE_NAME, categorySchema, {
+  updatedAt: false,
+});
 
 
 const associations = (models) => {
   CategoriesModel.hasMany(models.ProductsModel, {
-    as: 'products'
+    as: 'products',
+    foreignKey: {
+      name: 'category_id',
+      type: Sequelize.UUID,
+    },
   });
 }
 

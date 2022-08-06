@@ -1,4 +1,6 @@
 const { ProductsModel } = require('./model');
+const { CategoriesModel } = require('../categories/model')
+const { OrdersModel } = require('../orders/model')
 
 function createProduct(product) {
   return new ProductsModel(product).save()
@@ -9,7 +11,14 @@ function getAllProducts(limit) {
 }
 
 function getProductById(productId) {
-  return ProductsModel.findByPk(productId);
+  return ProductsModel.findByPk(productId, {
+    include: [{
+      as: "Categories",
+      model: CategoriesModel,
+    }, {
+      model: OrdersModel
+    }],
+  });
 }
 
 function modifyProduct(product, productId) {

@@ -44,11 +44,13 @@ const productSchema = {
   }
 };
 
-const ProductsModel = SQL.define(TABLE_NAME, productSchema);
+const ProductsModel = SQL.define(TABLE_NAME, productSchema, {
+  updatedAt: false,
+});
 
 const associations = (models) => {
   ProductsModel.belongsTo(models.CategoriesModel, {
-    as: 'category',
+    as: 'Categories',
     foreignKey: {
       name: 'category_id',
       type: Sequelize.UUID,

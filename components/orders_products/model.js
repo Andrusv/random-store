@@ -44,7 +44,9 @@ const ordersProductsSchema = {
   }
 };
 
-const OrdersProductsModel = SQL.define(TABLE_NAME, ordersProductsSchema);
+const OrdersProductsModel = SQL.define(TABLE_NAME, ordersProductsSchema, {
+  updatedAt: false,
+});
 
 // eslint-disable-next-line no-unused-vars
 const associations = (models) => {
