@@ -17,7 +17,21 @@ class Orders {
     .request(url)
     .post("/orders/")
     .send({
-      "customerId": customerId
+      "customerId": customerId,
+      "products": [
+        {
+            "amount": 2,
+            "productId": "46b25b16-74c2-426b-8cd1-dbefc6aa1957"
+        },
+        {
+            "amount": 1,
+            "productId": "1e0ba865-e836-486e-9ce9-e8446fe1aee4"
+        },
+        {
+            "amount": 10,
+            "productId": "5236da57-f7d7-497c-bd5c-d67927346ba2"
+        }
+    ]
     })
   }
 
